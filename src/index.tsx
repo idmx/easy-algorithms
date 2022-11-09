@@ -1,7 +1,7 @@
-import React, { StrictMode } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 
-import App from "@/App";
+import App from "@/components/App";
 
 import "./index.scss";
 
@@ -11,11 +11,7 @@ if (!rootElement) {
 	throw new Error("Failed to find the root element");
 }
 
-const AppContainer = () => (
-	<StrictMode>
-		<App />
-	</StrictMode>
-);
+const AppContainer = () => <App />;
 
 const root = createRoot(rootElement);
 
