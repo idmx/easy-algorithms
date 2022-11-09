@@ -10,14 +10,33 @@ import { binarySearchText } from "@/utils/helpers/texts";
 
 import styles from "./BinarySearch.module.scss";
 
+const initialArray = [
+	{ value: 1, hidden: false },
+	{ value: 2, hidden: false },
+	{ value: 3, hidden: false },
+	{ value: 4, hidden: false },
+	{ value: 5, hidden: false },
+	{ value: 6, hidden: false },
+	{ value: 7, hidden: false },
+	{ value: 8, hidden: false },
+	{ value: 9, hidden: false },
+];
+
 const BinarySearch = () => {
-	const [array, setArray] = useState<number[] | string[]>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+	const [array, setArray] = useState<typeof initialArray>(initialArray);
 	const [inputArray, setInputArray] = useState<number[] | string[]>([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 	const [value, setValue] = useState<number>(8);
 	const [middleIndex, setMiddleIndex] = useState<number>();
 
+	const setVisibleArray = (lowIndex: number, highIndex: number) => {
+		const newArray = array.map((item, index) => {
+			return { value: item.value, hidden: !(index >= lowIndex && index <= highIndex) };
+		});
+		setArray(newArray);
+	};
+
 	const setAllArray = (values: string[]) => {
-		setArray(values);
+		setArray(values.map((value) => ({ value: +value, hidden: false })));
 		setInputArray(values);
 	};
 
@@ -27,22 +46,20 @@ const BinarySearch = () => {
 		while (lowIndex <= highIndex) {
 			await delay(1000);
 			const middleIndex = Math.floor((lowIndex + highIndex) / 2);
-			const newArray = array.slice(lowIndex, highIndex + 1);
-			const middle = Math.floor((newArray.length - 1) / 2);
-			setMiddleIndex(middle);
+			setMiddleIndex(middleIndex);
 			const middleValue = array[middleIndex];
-			await delay(1000);
+			await delay(2000);
 			if (+middleValue === +value) {
-				setArray([value]);
 				setMiddleIndex(-1);
-				await delay(1000);
+				setVisibleArray(middleIndex, middleIndex);
+				await delay(2000);
 				return middleIndex;
 			} else if (+middleValue > +value) {
 				highIndex = middleIndex - 1;
-				setArray(array.slice(lowIndex, highIndex + 1));
+				setVisibleArray(lowIndex, highIndex);
 			} else if (+middleValue < +value) {
 				lowIndex = middleIndex + 1;
-				setArray(array.slice(lowIndex, highIndex + 1));
+				setVisibleArray(lowIndex, highIndex);
 			} else {
 				return null;
 			}
@@ -51,7 +68,7 @@ const BinarySearch = () => {
 	};
 
 	const handleClick = () => {
-		setArray(inputArray);
+		setArray(inputArray.map((value) => ({ value: +value, hidden: false })));
 		bin(inputArray);
 	};
 
@@ -76,19 +93,25 @@ const BinarySearch = () => {
 				</div>
 
 				<div className={styles.itemsContainer}>
-					<Reorder.Group axis="x" values={array} onReorder={setArray} className={styles.itemsContainer}>
+					<Reorder.Group
+						axis="x"
+						values={array.map((item) => item.value)}
+						onReorder={console.log}
+						className={styles.itemsContainer}
+					>
 						{array.map((item, index) => (
-							<Reorder.Item key={index} value={item}>
+							<Reorder.Item key={index} value={item.value}>
 								<motion.div
 									transition={{ duration: 0.5 }}
 									initial={{ opacity: 0, scale: 0.5 }}
 									animate={{
 										opacity: 1,
 										scale: index === middleIndex ? 1.2 : 1,
+										visibility: item.hidden ? "hidden" : "visible",
 									}}
 									className={`${styles.item} ${index === middleIndex && styles.middle}`}
 								>
-									{item}
+									{item.value}
 								</motion.div>
 							</Reorder.Item>
 						))}

@@ -8,17 +8,17 @@
   @include default-size;
 
   border: none;
-  background-color: rgb(123 206 254);
+  background-color: rgb(174 182 187);
 
   &:hover {
 
-    box-shadow: 1px 1px 2px 0 rgb(55 128 225);
+    box-shadow: 1px 1px 2px 0 rgb(167 180 188 / 45%);
   }
 
   &:focus-visible {
 
-    border: 1px solid rgb(11 78 164);
-    box-shadow: 1px 1px 2px 0 rgb(55 128 225);
+    border: 1px solid rgb(126 143 153);
+    box-shadow: 1px 1px 2px 0 rgb(167 181 190 / 45%);
     outline: none;
   }
 }
