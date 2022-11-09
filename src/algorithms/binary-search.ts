@@ -1,7 +1,7 @@
-export const binarySearch = (array: number[], value: number) => {
-	let lowIndex = 0;
+export const binarySearch = `
+binarySearch = (array: number[], value: number) => {
+  let lowIndex = 0;
 	let highIndex = array.length - 1;
-
 	while (lowIndex <= highIndex) {
 		const middleIndex = Math.floor((lowIndex + highIndex) / 2);
 		const middleValue = array[middleIndex];
@@ -15,4 +15,4 @@ export const binarySearch = (array: number[], value: number) => {
 			return null;
 		}
 	}
-};
+};`;

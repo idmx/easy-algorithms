@@ -1,6 +1,19 @@
-$color: red;
+@font-face {
+
+  font-family: Inconsolata;
+  src: url("../assets/fonts/Inconsolata-Regular.ttf");
+}
 
 body {
 
-  color: $color;
+  background-image: url("../assets/background.jpg");
+}
+
+p,
+h1,
+h2,
+h3 {
+
+  padding: 0;
+  margin: 0;
 }
